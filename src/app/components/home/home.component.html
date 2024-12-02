@@ -1,19 +1,58 @@
-<div cdkDropListGroup>
+<div class="boards" cdkDropListGroup>
   <div
-    class="example-container"
-    *ngFor="let board of boards; trackBy: trackByBoard"
+    class="board-container"
+    [ngClass]="{ 'me-0': last, 'mb-0': last }"
+    *ngFor="let board of boards; let last = last; trackBy: trackByBoard"
   >
-    <h2>{{ board.name }}</h2>
-
+    <div class="board-container-header d-flex align-items-start">
+      <div class="d-flex align-items-center">
+        <div class="board-name">{{ board.name }}</div>
+        <div class="board-count ms-2">
+          {{ board.tasks.length }}
+        </div>
+      </div>
+      <div class="d-flex ms-auto">
+        <i class="fa-solid fa-plus"></i>
+        <i class="fa-solid fa-ellipsis ms-3"></i>
+      </div>
+    </div>
     <div
       cdkDropList
       [cdkDropListData]="board.tasks"
-      class="example-list"
+      class="tasks-list"
       (cdkDropListDropped)="dropTask($event)"
     >
-      <ng-container *ngFor="let task of board.tasks; trackBy: trackByTask">
-        <div class="example-box" cdkDrag>{{ task.title }}</div>
+      <ng-container
+        *ngFor="let task of board.tasks; let last = last; trackBy: trackByTask"
+      >
+        <div class="card" [ngClass]="{ 'mb-3': !last }" cdkDrag>
+          <div class="card-body">
+            <div class="task-header d-flex align-items-center mb-2">
+              <h6 class="task-title me-3">
+                {{ task.title }}
+              </h6>
+              <i class="fa-solid fa-ellipsis ms-auto"></i>
+            </div>
+            <div class="task-body">
+              <div class="task-desc">
+                {{ task.description }}
+              </div>
+            </div>
+            <hr />
+            <div class="task-footer d-flex">
+              <div class="task-last-update me-3">
+                Last Update :
+                {{ task.lastUpdate | date : "medium" }}
+              </div>
+              <div class="task-priority ms-auto">High</div>
+            </div>
+          </div>
+        </div>
       </ng-container>
     </div>
+  </div>
+  <div class="new-board">
+    <i class="fa-solid fa-plus mb-3 new-board-icon"></i>
+    <span class="new-board-text">Create New Board</span>
   </div>
 </div>
