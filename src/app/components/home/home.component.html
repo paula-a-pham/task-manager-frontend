@@ -1,1 +1,19 @@
-<p>home works!</p>
+<div cdkDropListGroup>
+  <div
+    class="example-container"
+    *ngFor="let board of boards; trackBy: trackByBoard"
+  >
+    <h2>{{ board.name }}</h2>
+
+    <div
+      cdkDropList
+      [cdkDropListData]="board.tasks"
+      class="example-list"
+      (cdkDropListDropped)="dropTask($event)"
+    >
+      <ng-container *ngFor="let task of board.tasks; trackBy: trackByTask">
+        <div class="example-box" cdkDrag>{{ task.title }}</div>
+      </ng-container>
+    </div>
+  </div>
+</div>

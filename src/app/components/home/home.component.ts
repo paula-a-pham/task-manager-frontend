@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
 import { IBoard } from '../../models/iboard';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
+import { ITask } from '../../models/itask';
 
 @Component({
   selector: 'app-home',
@@ -14,8 +20,8 @@ export class HomeComponent {
       tasks: [
         {
           id: 1,
-          title: 'Task 1',
-          description: 'Description of Task 1 in To Do',
+          title: 'Plan Project Milestones',
+          description: 'Create a timeline for key project milestones.',
           createdOn: new Date(),
           lastUpdate: new Date(),
           boardName: 'To Do',
@@ -24,8 +30,8 @@ export class HomeComponent {
         },
         {
           id: 2,
-          title: 'Task 2',
-          description: 'Description of Task 2 in To Do',
+          title: 'Research Competitor Features',
+          description: 'Analyze competitor products for inspiration.',
           createdOn: new Date(),
           lastUpdate: new Date(),
           boardName: 'To Do',
@@ -40,8 +46,8 @@ export class HomeComponent {
       tasks: [
         {
           id: 1,
-          title: 'Task 1',
-          description: 'Description of Task 1 in In Progress',
+          title: 'Develop Authentication System',
+          description: 'Implement user login and registration functionalities.',
           createdOn: new Date(),
           lastUpdate: new Date(),
           boardName: 'In Progress',
@@ -50,8 +56,8 @@ export class HomeComponent {
         },
         {
           id: 2,
-          title: 'Task 2',
-          description: 'Description of Task 2 in In Progress',
+          title: 'UI Design for Dashboard',
+          description: 'Design an intuitive dashboard layout for users.',
           createdOn: new Date(),
           lastUpdate: new Date(),
           boardName: 'In Progress',
@@ -66,8 +72,8 @@ export class HomeComponent {
       tasks: [
         {
           id: 1,
-          title: 'Task 1',
-          description: 'Description of Task 1 in Completed',
+          title: 'Finalize Logo Design',
+          description: 'Complete and approve the final logo for the project.',
           createdOn: new Date(),
           lastUpdate: new Date(),
           boardName: 'Completed',
@@ -76,8 +82,8 @@ export class HomeComponent {
         },
         {
           id: 2,
-          title: 'Task 2',
-          description: 'Description of Task 2 in Completed',
+          title: 'Fix Security Vulnerabilities',
+          description: 'Resolve identified security flaws in the application.',
           createdOn: new Date(),
           lastUpdate: new Date(),
           boardName: 'Completed',
@@ -87,4 +93,29 @@ export class HomeComponent {
       ],
     },
   ];
+
+  dropTask(event: CdkDragDrop<ITask[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
+  }
+
+  trackByBoard(index: number, board: IBoard): number {
+    return board.id;
+  }
+
+  trackByTask(index: number, task: ITask): number {
+    return task.id;
+  }
 }
