@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { IBoard } from '../../models/iboard';
 import {
   CdkDragDrop,
@@ -6,6 +6,7 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { ITask } from '../../models/itask';
+import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-home',
@@ -94,6 +95,10 @@ export class HomeComponent {
     },
   ];
 
+  task!: ITask;
+
+  constructor(private offcanvasService: NgbOffcanvas) {}
+
   dropTask(event: CdkDragDrop<ITask[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(
@@ -117,5 +122,13 @@ export class HomeComponent {
 
   trackByTask(index: number, task: ITask): number {
     return task.id;
+  }
+
+  openTaskInformationPanel(content: TemplateRef<any>, task: ITask) {
+    this.task = task;
+    this.offcanvasService.open(content, {
+      position: 'end',
+      panelClass: 'x-panel',
+    });
   }
 }

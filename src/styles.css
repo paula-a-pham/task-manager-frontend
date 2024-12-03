@@ -8,3 +8,7 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+.x-panel {
+  margin: 0.75rem;
+  border-radius: 0.75rem;
+}

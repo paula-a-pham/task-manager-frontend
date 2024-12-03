@@ -59,11 +59,19 @@
   color: #62636c;
 }
 .task-priority {
-  padding: 0.25rem;
-  border: 0.125rem solid #81a7f4;
+  padding: 0.25rem 0.5rem;
+  border: 0.125rem solid #ff4c4c;
   border-radius: 0.5rem;
-  background-color: #deeaff;
+  background-color: #ffeded;
   font-size: 0.75rem;
+  font-weight: 500;
+  color: #ff4c4c;
+}
+.circle {
+  height: 0.25rem;
+  width: 0.25rem;
+  border-radius: 50%;
+  background-color: #ff4c4c;
 }
 .new-board {
   height: 100%;
@@ -104,6 +112,39 @@
 }
 .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+.offcanvas-body {
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+.offcanvas-body .row {
+  font-size: 0.95rem;
+}
+.offcanvas-body .row .col-5 {
+  color: #8b8d98;
+}
+.offcanvas-body .row .col-7 {
+  color: #1e1f24;
+}
+.task-tags {
+  display: flex;
+  flex-wrap: wrap;
+}
+.task-tag {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  background-color: #eff0f3;
+  font-size: 0.85rem;
+}
+.task-desc-title {
+  font-size: 0.95rem;
+
+  color: #8b8d98;
+}
+.task-desc-body {
+  word-wrap: break-word;
+
+  color: #1e1f24;
 }
 @media (max-width: 992px) {
   .board-container {

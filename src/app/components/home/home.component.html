@@ -28,23 +28,30 @@
         <div class="card" [ngClass]="{ 'mb-3': !last }" cdkDrag>
           <div class="card-body">
             <div class="task-header d-flex align-items-center mb-2">
-              <h6 class="task-title me-3">
-                {{ task.title }}
-              </h6>
+              <div class="task-priority d-flex align-items-center me-3">
+                <div class="circle me-1"></div>
+                High
+              </div>
+
               <i class="fa-solid fa-ellipsis ms-auto"></i>
             </div>
-            <div class="task-body">
+            <div
+              class="task-body"
+              (click)="openTaskInformationPanel(panelContent, task)"
+            >
+              <h6 class="task-title">
+                {{ task.title }}
+              </h6>
               <div class="task-desc">
                 {{ task.description }}
               </div>
-            </div>
-            <hr />
-            <div class="task-footer d-flex">
-              <div class="task-last-update me-3">
-                Last Update :
-                {{ task.lastUpdate | date : "medium" }}
+              <hr />
+              <div class="task-footer d-flex">
+                <div class="task-last-update me-3">
+                  Last Update :
+                  {{ task.lastUpdate | date : "medium" }}
+                </div>
               </div>
-              <div class="task-priority ms-auto">High</div>
             </div>
           </div>
         </div>
@@ -56,3 +63,62 @@
     <span class="new-board-text">Create New Board</span>
   </div>
 </div>
+
+<ng-template #panelContent let-offcanvas>
+  <div class="offcanvas-header" ngbAutofocus>
+    <h5 class="offcanvas-title">
+      {{ task.title }}
+    </h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="offcanvas.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="row mb-3">
+      <div class="col-5">
+        <div class="d-flex align-items-center mb-3">
+          <i class="fa-regular fa-clock"></i>
+          <div class="ms-2">Created On</div>
+        </div>
+        <div class="d-flex align-items-center mb-3">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <div class="ms-2">Last Update</div>
+        </div>
+        <div class="d-flex align-items-center mb-3">
+          <i class="fa-regular fa-circle-check"></i>
+          <div class="ms-2">Priority</div>
+        </div>
+        <div class="d-flex align-items-center">
+          <i class="fa-solid fa-tags"></i>
+          <div class="ms-2">Tags</div>
+        </div>
+      </div>
+      <div class="col-7">
+        <div class="ms-2 mb-3">
+          {{ task.createdOn | date : "medium" }}
+        </div>
+        <div class="ms-2 mb-3">
+          {{ task.lastUpdate | date : "medium" }}
+        </div>
+        <div class="ms-2 mb-3">High</div>
+        <div class="task-tags ms-2">
+          <ng-container *ngFor="let tag of task.tags">
+            <div class="task-tag me-2 mb-2">
+              {{ tag | titlecase }}
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="task-desc-title mb-2">
+      <i class="fa-solid fa-circle-info"></i>
+      <span class="ms-2">Description</span>
+    </div>
+    <div class="task-desc-body">
+      {{ task.description }}
+    </div>
+  </div>
+</ng-template>
