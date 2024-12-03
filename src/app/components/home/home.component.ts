@@ -7,6 +7,7 @@ import {
 } from '@angular/cdk/drag-drop';
 import { ITask } from '../../models/itask';
 import { NgbModal, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 
 @Component({
   selector: 'app-home',
@@ -96,8 +97,20 @@ export class HomeComponent {
   ];
 
   task!: ITask;
+  // addOnBlur = true;
+  tags!: string[];
 
-  constructor(private offcanvasService: NgbOffcanvas,private modalService :NgbModal) {}
+  newTaskFlag!: boolean;
+  boardId!: number;
+
+  constructor(
+    private offcanvasService: NgbOffcanvas,
+    private modalService: NgbModal
+  ) {
+    this.tags = [];
+    this.newTaskFlag = false;
+    this.boardId = 0;
+  }
 
   dropTask(event: CdkDragDrop<ITask[]>) {
     if (event.previousContainer === event.container) {
@@ -133,6 +146,49 @@ export class HomeComponent {
   }
 
   openDialog(content: TemplateRef<any>) {
-		this.modalService.open(content);
-	}
+    this.modalService.open(content);
+  }
+
+  displayNewTaskCard(id: number): void {
+    this.newTaskFlag = true;
+    this.boardId = id;
+  }
+
+  hideNewTaskCard(): void {
+    this.newTaskFlag = false;
+    this.boardId = 0;
+    this.tags = [];
+  }
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    if (value) {
+      this.tags.push(value);
+    }
+
+    event.chipInput!.clear();
+  }
+
+  remove(tag: string): void {
+    const index = this.tags.indexOf(tag);
+
+    if (index >= 0) {
+      this.tags.splice(index, 1);
+    }
+  }
+
+  edit(tag: string, event: MatChipEditedEvent) {
+    const value = event.value.trim();
+
+    if (!value) {
+      this.remove(tag);
+      return;
+    }
+
+    const index = this.tags.indexOf(tag);
+    if (index >= 0) {
+      this.tags[index] = value;
+    }
+  }
 }

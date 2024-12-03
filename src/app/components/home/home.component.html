@@ -12,8 +12,43 @@
         </div>
       </div>
       <div class="d-flex ms-auto">
-        <i class="fa-solid fa-plus"></i>
+        <i class="fa-solid fa-plus" (click)="displayNewTaskCard(board.id)"></i>
         <i class="fa-solid fa-ellipsis ms-3"></i>
+      </div>
+    </div>
+    <div *ngIf="newTaskFlag && boardId === board.id" class="new-task card mb-3">
+      <div class="card-body">
+        <div class="task-header d-flex align-items-center mb-2">
+          <div class="task-priority d-flex align-items-center me-2">
+            <div class="circle me-1"></div>
+            Low
+          </div>
+          <div class="task-priority d-flex align-items-center me-2">
+            <div class="circle me-1"></div>
+            Medium
+          </div>
+          <div class="task-priority d-flex align-items-center me-2">
+            <div class="circle me-1"></div>
+            High
+          </div>
+        </div>
+
+        <div class="task-body">
+          <input
+            type="text"
+            class="form-control new-task-title mb-2"
+            placeholder="Task Title"
+          />
+          <input
+            type="text"
+            class="form-control new-task-desc mb-2"
+            placeholder="Description"
+          />
+          <div class="d-flex align-items-center justify-content-end">
+            <div class="me-2">Ignore</div>
+            <button class="btn btn-primary">Create</button>
+          </div>
+        </div>
       </div>
     </div>
     <div
