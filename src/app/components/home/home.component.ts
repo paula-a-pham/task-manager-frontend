@@ -6,7 +6,7 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { ITask } from '../../models/itask';
-import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-home',
@@ -97,7 +97,7 @@ export class HomeComponent {
 
   task!: ITask;
 
-  constructor(private offcanvasService: NgbOffcanvas) {}
+  constructor(private offcanvasService: NgbOffcanvas,private modalService :NgbModal) {}
 
   dropTask(event: CdkDragDrop<ITask[]>) {
     if (event.previousContainer === event.container) {
@@ -131,4 +131,8 @@ export class HomeComponent {
       panelClass: 'x-panel',
     });
   }
+
+  openDialog(content: TemplateRef<any>) {
+		this.modalService.open(content);
+	}
 }

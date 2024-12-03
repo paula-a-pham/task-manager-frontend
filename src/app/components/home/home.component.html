@@ -58,7 +58,7 @@
       </ng-container>
     </div>
   </div>
-  <div class="new-board">
+  <div class="new-board" (click)="openDialog(createBoardContent)">
     <i class="fa-solid fa-plus mb-3 new-board-icon"></i>
     <span class="new-board-text">Create New Board</span>
   </div>
@@ -120,5 +120,24 @@
     <div class="task-desc-body">
       {{ task.description }}
     </div>
+  </div>
+</ng-template>
+
+<ng-template #createBoardContent let-modal>
+  <div class="modal-header" ngbAutofocus>
+    <h4 class="modal-title" id="modal-basic-title">Create Board</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="mb-3">
+      <label for="board-name" class="form-label">Board Name</label>
+      <input type="text" class="form-control" id="board-name" />
+    </div>
+    <button class="btn btn-primary w-100">Create</button>
   </div>
 </ng-template>
